@@ -23,11 +23,9 @@ int main(int argc, char** argv)
         return -1;
     }
     
-    cvNamedWindow("Viewer");
-    cvShowImage("Viewer", pInpImg);
-    cvWaitKey(0);
-    cvDestroyWindow("Viewer");
-    
+    //=========================================
+    //test 1
+    //=========================================
     // Write the image to a file with a different name,
     // using a different image format -- .png instead of .jpg
     if( !cvSaveImage("my_image_copy.png", pInpImg) )
@@ -35,8 +33,46 @@ int main(int argc, char** argv)
         fprintf(stderr, "failed to write image file\n");
     }
     
+    //=========================================
+    // test2 widnow create
+    //=========================================
+    cvNamedWindow("Viewer");
+    cvShowImage("Viewer", pInpImg);
+    cvWaitKey(0);
+    cvDestroyWindow("Viewer");
+
     // Remember to free image memory after using it!
     cvReleaseImage(&pInpImg);
+
+    //=========================================
+    // test3. cam
+    //=========================================
+    CvCapture* capture = cvCaptureFromCAM(0);
+    cvNamedWindow("camera",0);
+    cvResizeWindow("camera", 320, 240);
+    
+    while (1) {
+        cvGrabFrame(capture);
+        pInpImg = cvRetrieveFrame(capture);
+        cvShowImage("camera", pInpImg);
+        
+        if(cvWaitKey(10) >= 0)
+            break;
+    }
+    cvReleaseCapture(&capture);
+    cvDestroyWindow("camera");
+    
+    // Remember to free image memory after using it!
+    cvReleaseImage(&pInpImg);
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     return 0;
 }
