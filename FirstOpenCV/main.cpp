@@ -23,6 +23,11 @@ int main(int argc, char** argv)
         return -1;
     }
     
+    cvNamedWindow("Viewer");
+    cvShowImage("Viewer", pInpImg);
+    cvWaitKey(0);
+    cvDestroyWindow("Viewer");
+    
     // Write the image to a file with a different name,
     // using a different image format -- .png instead of .jpg
     if( !cvSaveImage("my_image_copy.png", pInpImg) )
